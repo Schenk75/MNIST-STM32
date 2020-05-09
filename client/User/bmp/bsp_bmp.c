@@ -30,11 +30,9 @@ void Screen_Shot( uint16_t x, uint16_t y, uint16_t Width, uint16_t Height){
 
 	printf("++++++|[");
 	
-	for(i=0; i<Height; i++)					
-	{
+	for(i=0; i<Height; i++){
 		printf("[");
-		for(j=0; j<Width; j++)  
-		{					
+		for(j=0; j<Width; j++){					
 			read_data = ILI9341_GetPointPixel ( x + j, y + i );	
 			
 			r =  GETR_FROM_RGB16(read_data);

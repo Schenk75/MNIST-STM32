@@ -38,13 +38,13 @@ try:
     # 打开串口，并得到串口对象
     ser= serial.Serial(port, bps)
     # 判断是否打开成功
-    if (ser.is_open):
+    if ser.is_open:
         flag = True
         print('Server start!')
 except Exception as e:
     print("ERROR: ", e)
 
-if (flag):
+if flag:
     while True:
         time.sleep(0.5)
         data += ser.read_all().decode('ascii')
@@ -60,16 +60,16 @@ if (flag):
             mi.imsave(file_name, data_array)
 
             # 图像预处理
-            img = Image.open(file_name).convert('L')
-            img = img.crop((1, 1, 98, 98))
-            img = img.point(table, '1')
+            img = Image.open(file_name).convert('L')    # 将图片转为灰度图
+            img = img.crop((1, 1, 98, 98))    # 裁剪图片
+            img = img.point(table, '1')    # 图片二值化
             img.save(file_name)
             transform = transforms.Compose([
-                transforms.Resize((32, 32)),
-                transforms.ToTensor(),
-                transforms.Normalize((0.1307, ), (0.3081, ))])
+                transforms.Resize((32, 32)),    # 图片缩小
+                transforms.ToTensor(),      # 图片转tensor
+                transforms.Normalize((0.1307, ), (0.3081, ))])      # 标准化
             img = transform(img).to(device)
-            img = img.unsqueeze(0)
+            img = img.unsqueeze(0)      # 添加一个维度，因为网络要求输入格式为(batch_size, 通道数, 长, 宽)
 
             model.eval()
             with torch.no_grad():

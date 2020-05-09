@@ -75,25 +75,25 @@ OV7725_MODE_PARAM cam_mode =
 	/*******配置3************小分辨率****************************/	
 	/*小于320*240分辨率的，可使用QVGA模式,设置的时候注意液晶屏边界*/
 	
-	.QVGA_VGA = 0,	//QVGA模式
-	//取QVGA模式居中的窗口，可根据实际需要调整
-	.cam_sx = (320-100)/2,
-	.cam_sy = (240-100)/2,	
-	
-	.cam_width = 100, 
-	.cam_height = 100, 
-	
-	/*液晶屏的显示位置也可以根据需要调整，注意不要超过边界即可*/
-	.lcd_sx = (320-100)/2,
-	.lcd_sy = (240-100)/2,
-	.lcd_scan = 3, //LCD扫描模式，0-7模式都支持，注意不要超过边界即可
+.QVGA_VGA = 0,	//QVGA模式
+//取QVGA模式居中的窗口，可根据实际需要调整
+.cam_sx = (320-100)/2,
+.cam_sy = (240-100)/2,	
 
-	//以下可根据自己的需要调整，参数范围见结构体类型定义	
-	.light_mode = 0,//自动光照模式
-	.saturation = 0,	
-	.brightness = 0,
-	.contrast = 0,
-	.effect = 0,		//正常模式
+.cam_width = 100, 
+.cam_height = 100, 
+
+/*液晶屏的显示位置也可以根据需要调整，注意不要超过边界即可*/
+.lcd_sx = (320-100)/2,
+.lcd_sy = (240-100)/2,
+.lcd_scan = 3, //LCD扫描模式，0-7模式都支持，注意不要超过边界即可
+
+//以下可根据自己的需要调整，参数范围见结构体类型定义	
+.light_mode = 0,//自动光照模式
+.saturation = 0,	
+.brightness = 0,
+.contrast = 0,
+.effect = 0,		//正常模式
 
 };
 
@@ -765,10 +765,8 @@ void ImagDisp(uint16_t sx,uint16_t sy,uint16_t width,uint16_t height)
 	ILI9341_OpenWindow(sx,sy,width,height);
 	ILI9341_Write_Cmd ( CMD_SetPixel );	
 
-	for(i = 0; i < width; i++)
-	{
-		for(j = 0; j < height; j++)
-		{
+	for(i = 0; i < width; i++){
+		for(j = 0; j < height; j++){
 			READ_FIFO_PIXEL(Camera_Data);		/* 从FIFO读出一个rgb565像素到Camera_Data变量 */
 			ILI9341_Write_Data(Camera_Data);
 		}

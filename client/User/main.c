@@ -74,10 +74,10 @@ int main(void)
 	
 	/*设置图像采样及模式大小*/
 	OV7725_Window_Set(cam_mode.cam_sx,
-														cam_mode.cam_sy,
-														cam_mode.cam_width,
-														cam_mode.cam_height,
-														cam_mode.QVGA_VGA);
+					cam_mode.cam_sy,
+					cam_mode.cam_width,
+					cam_mode.cam_height,
+					cam_mode.QVGA_VGA);
 
 	/* 设置液晶扫描模式 */
 	ILI9341_GramScan( cam_mode.lcd_scan );
@@ -94,9 +94,9 @@ int main(void)
 			frame_count++;
 			FIFO_PREPARE;  			/*FIFO准备*/					
 			ImagDisp(cam_mode.lcd_sx,
-								cam_mode.lcd_sy,
-								cam_mode.cam_width,
-								cam_mode.cam_height);			/*采集并显示*/
+					cam_mode.lcd_sy,
+					cam_mode.cam_width,
+					cam_mode.cam_height);			/*采集并显示*/
 			
 			Ov7725_vsync = 0;
 		}
@@ -107,7 +107,6 @@ int main(void)
 			
 			/*截图必需设置好液晶显示方向和截图窗口*/
 			ILI9341_GramScan ( cam_mode.lcd_scan );			
-			
 			// 截图，完成后亮绿灯
 			Screen_Shot(110,70,LCD_X_LENGTH,LCD_Y_LENGTH);
 			LED_GREEN;
@@ -121,13 +120,10 @@ int main(void)
 			ILI9341_DispStringLine_EN(LINE(1), result);
 			
 			// 截图后停留在截到图片的画面，直到按下k2
-			while(1){
-				if( Key_Scan(KEY2_GPIO_PORT,KEY2_GPIO_PIN) == KEY_ON  )
-				{
-					ILI9341_Clear(0,0,100,100);
-					LED_BLUE;
-					break;
-				}
+			if(Key_Scan(KEY2_GPIO_PORT, KEY2_GPIO_PIN) == KEY_ON){
+				ILI9341_Clear(0,0,100,100);
+				LED_BLUE; 
+				break;
 			}
 		}
 		
